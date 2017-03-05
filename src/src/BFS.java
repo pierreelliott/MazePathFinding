@@ -14,8 +14,7 @@ public class BFS extends AbstractSearch {
     private void performBFS() {
         // method to complete
         PositionQueue queue = new PositionQueue();
-        boolean[][] alreadyVisited = new boolean[maze.getHeight()][maze.getWidth()];
-        //System.out.println("Array alreadyVisited : "+Arrays.toString(alreadyVisited));
+        boolean[][] alreadyVisited = new boolean[maze.getHeight()][maze.getWidth()];        
         Position[][] predecessor = new Position[maze.getHeight()][maze.getWidth()];
         
         // set already visited flag for the starting location to true value
@@ -25,23 +24,31 @@ public class BFS extends AbstractSearch {
         queue.add(startPos);
         
         // Outer loop
-        while(!queue.isEmpty() && currentPos != goalPos) {
+        search : while(!queue.isEmpty() && currentPos != goalPos) {
             currentPos = queue.getFrontPosition();
             
             for(Position pos : getPossibleMoves(currentPos)) {
-                if(pos == goalPos)
-                    break;
+                
                 // break both loops or just the inner one ?
                 //System.out.println("Array : "+Arrays.toString(alreadyVisited));
+                
                 
                 if(pos != null && !alreadyVisited[pos.x][pos.y]) {
                     queue.add(pos);
                     // set the predecessor array for the new location to the last visited cell (i.e. variable "front")
                     predecessor[pos.x][pos.y] = currentPos;
+                    if(pos == goalPos)
+                        break search;
                 }
             }
             alreadyVisited[currentPos.x][currentPos.y] = true;
             queue.remove();
+            
+            /*for(boolean[] arr : alreadyVisited)
+            {
+                System.out.println("Array alreadyVisited : " + Arrays.toString(arr));
+            }
+            System.out.println();*/
         }
         
         int i = 0;
