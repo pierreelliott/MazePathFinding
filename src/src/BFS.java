@@ -12,33 +12,41 @@ public class BFS extends AbstractSearch {
     private void performBFS() {
         // method to complete
         PositionQueue queue = new PositionQueue();
-        
-        // ** set already visited flag for the starting location to true value
-        // ** add starting location to the back of the queue
-        
-        Position front;
         boolean[][] alreadyVisited = new boolean[maze.getHeight()][maze.getWidth()];
-        // ** Array[][] predecessor
+        System.out.println(alreadyVisited);
+        Position[][] predecessor = new Position[maze.getHeight()][maze.getWidth()];
+        
+        // set already visited flag for the starting location to true value
+        alreadyVisited[startPos.x][startPos.y] = true;
+        
+        // add starting location to the back of the queue
+        queue.add(startPos);
+        
         // Outer loop
-        while(!queue.isEmpty() || currentPos == goalPos) {
-            front = queue.head();
+        while(!queue.isEmpty() || currentPos != goalPos) {
+            currentPos = queue.head();
             
-            for(Position pos : getPossibleMoves(front)) {
+            for(Position pos : getPossibleMoves(currentPos)) {
                 if(pos == goalPos) { break; }
                 // break both loops or just the inner one ?
                 
                 if(!alreadyVisited[pos.x][pos.y]) {
                     queue.add(pos);
-                    // ** set the predecessor array for the new location
-                    // to the last visited cell (i.e. variable "front")
+                    // set the predecessor array for the new location to the last visited cell (i.e. variable "front")
+                    predecessor[pos.x][pos.y] = currentPos;
                 }
             }
-            
+            alreadyVisited[currentPos.x][currentPos.y] = true;
             queue.remove();
         }
         
-        // fill the searchPath array (in reverse order)
-        // using the shortest path in the predecessor array
+        int i = 0;
+        while(currentPos != startPos) {
+            searchPath[i] = currentPos;
+            currentPos = predecessor[currentPos.x][currentPos.y];
+            i++;
+        }
+        // fill the searchPath array (in reverse order, i.e. starting by the goal position) using the shortest path in the predecessor array
     }
     
     protected class PositionQueue {
