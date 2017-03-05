@@ -15,7 +15,7 @@ public class BFS extends AbstractSearch {
         // method to complete
         PositionQueue queue = new PositionQueue();
         boolean[][] alreadyVisited = new boolean[maze.getHeight()][maze.getWidth()];
-        System.out.println("Array alreadyVisited : "+Arrays.toString(alreadyVisited));
+        //System.out.println("Array alreadyVisited : "+Arrays.toString(alreadyVisited));
         Position[][] predecessor = new Position[maze.getHeight()][maze.getWidth()];
         
         // set already visited flag for the starting location to true value
@@ -32,7 +32,7 @@ public class BFS extends AbstractSearch {
                 if(pos == goalPos)
                     break;
                 // break both loops or just the inner one ?
-                System.out.println("Array : "+Arrays.toString(alreadyVisited));
+                //System.out.println("Array : "+Arrays.toString(alreadyVisited));
                 
                 if(pos != null && !alreadyVisited[pos.x][pos.y]) {
                     queue.add(pos);
@@ -50,6 +50,8 @@ public class BFS extends AbstractSearch {
             currentPos = predecessor[currentPos.x][currentPos.y];
             i++;
         }
+        
+        System.out.println("Path found : " + Arrays.toString(searchPath));
         // fill the searchPath array (in reverse order, i.e. starting by the goal position) using the shortest path in the predecessor array
     }
     
