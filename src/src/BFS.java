@@ -1,7 +1,8 @@
 package src;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Queue;
 
 public class BFS extends AbstractSearch {
 
@@ -25,7 +26,7 @@ public class BFS extends AbstractSearch {
         
         // Outer loop
         while(!queue.isEmpty() || currentPos != goalPos) {
-            currentPos = queue.head();
+            currentPos = queue.getFrontPosition();
             
             for(Position pos : getPossibleMoves(currentPos)) {
                 if(pos == goalPos) { break; }
@@ -52,27 +53,12 @@ public class BFS extends AbstractSearch {
     }
     
     protected class PositionQueue {
-        // Class to manage the queue       
-        private final ArrayList<Position> queue;
-        
-        public PositionQueue() {
-            queue = new ArrayList<>();
+            // Class to manage the queue       
+            private Queue<Position> q = new ArrayDeque<>();
+            
+            public boolean add(Position p) { return q.add(p); }
+            public Position remove() { return q.remove(); }
+            public Position getFrontPosition() { return q.element(); }
+            public boolean isEmpty() { return q.isEmpty(); }
         }
-
-        public void add(Position pos) {
-            queue.add(pos);
-        }
-        
-        public Position remove() {
-            return queue.remove(0);
-        }
-
-        public Position head() {
-            return queue.get(0);
-        }
-        
-        public boolean isEmpty() {
-            return queue.isEmpty();
-        }
-    }
 }
