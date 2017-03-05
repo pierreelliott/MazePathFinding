@@ -27,7 +27,7 @@ public class BFS extends AbstractSearch {
                 if(pos == goalPos) { break; }
                 // break both loops or just the inner one ?
                 
-                if(!alreadyVisited.contain(pos)) {
+                if(!alreadyVisited[pos.x][pos.y]) {
                     queue.add(pos);
                     // ** set the predecessor array for the new location
                     // to the last visited cell (i.e. variable "front")
