@@ -25,15 +25,16 @@ public class BFS extends AbstractSearch {
         queue.add(startPos);
         
         // Outer loop
-        while(!queue.isEmpty() || currentPos != goalPos) {
+        while(!queue.isEmpty() && currentPos != goalPos) {
             currentPos = queue.getFrontPosition();
             
             for(Position pos : getPossibleMoves(currentPos)) {
-                if(pos == goalPos) { break; }
+                if(pos == goalPos)
+                    break;
                 // break both loops or just the inner one ?
                 System.out.println("Array : "+Arrays.toString(alreadyVisited));
                 
-                if(!alreadyVisited[pos.x][pos.y]) {
+                if(pos != null && !alreadyVisited[pos.x][pos.y]) {
                     queue.add(pos);
                     // set the predecessor array for the new location to the last visited cell (i.e. variable "front")
                     predecessor[pos.x][pos.y] = currentPos;
